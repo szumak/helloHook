@@ -3,9 +3,12 @@ pipeline {
     agent { node { label 'slave' } }
 
     stages {
-        stage('Build') {
+        stage('Build image') {
             steps {
-                echo 'Building......'
+                echo 'Building...'
+                sh """
+                   docker build --pull -t "mszumski:latest" image/Dockerfile
+                """
             }
         }
         stage('Test') {
