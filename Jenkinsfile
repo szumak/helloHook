@@ -7,7 +7,8 @@ pipeline {
             steps {
                 echo 'Building...'
                 sh """
-                   docker build --pull -t "mszumski:latest" image/Dockerfile
+                   cd image
+                   docker build --pull -t "mszumski:latest" .
                 """
             }
         }
