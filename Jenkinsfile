@@ -1,9 +1,8 @@
 pipeline {
 
     environment {
-        ARTIFACTORY_REPO = ARTIFACTORY_HOST
-        ARTIFACTORY_USER = credentials('ARTIFACTORY_USER')
-        ARTIFACTORY_PASS = credentials('ARTIFACTORY_PASS')
+        ARTIFACTORY_REPO = 'ARTIFACTORY_HOST'
+        ARTIFACTORY_CRED = credentials('ARTIFACTORY_DOCKER')
     }
    
     agent { node { label 'slave' } }
@@ -22,7 +21,7 @@ pipeline {
             steps {
                 echo 'Docker login....'
                 sh """
-                   docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS $ARTIFACTORY_REPO
+                   echo "docker login -u $ARTIFACTORY_CRED_USR -p $ARTIFACTORY_CRED_PSW $ARTIFACTORY_REPO"
                 """
             }
         }
