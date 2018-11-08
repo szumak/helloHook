@@ -1,7 +1,7 @@
 pipeline {
 
     environment {
-        ARTIFACTORY_REPO = 'ARTIFACTORY_HOST'
+        ARTIFACTORY_REPO = credentials('ARTIFACTORY_HOST')
         ARTIFACTORY_CRED = credentials('ARTIFACTORY_DOCKER')
     }
    
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo 'Docker login....'
                 sh """
-                   echo "docker login -u $ARTIFACTORY_CRED_USR -p $ARTIFACTORY_CRED_PSW $ARTIFACTORY_REPO"
+                   docker login -u $ARTIFACTORY_CRED_USR -p $ARTIFACTORY_CRED_PSW $ARTIFACTORY_REPO
                 """
             }
         }
