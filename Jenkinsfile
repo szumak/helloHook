@@ -3,6 +3,7 @@ pipeline {
     environment {
         ARTIFACTORY_REPO = credentials('ARTIFACTORY_HOST')
         ARTIFACTORY_CRED = credentials('ARTIFACTORY_DOCKER')
+        IMAGE_NAME       = "${ARTIFACTORY_REPO}/acme/" + "${JOB_NAME}".replaceAll('/', '_').toLowerCase()
     }
    
     agent { node { label 'slave' } }
@@ -13,7 +14,7 @@ pipeline {
                 echo 'Building...'
                 sh """
                    cd image
-                   docker build --pull -t "$ARTIFACTORY_REPO/acme/${JOB_NAME}_${BRANCH_NAME}:latest" .
+                   docker build --pull -t "${IMAGE_NAME}:latest" .
                 """
             }
         }
@@ -22,7 +23,7 @@ pipeline {
                 echo 'Docker login....'
                 sh """
                    docker login -u $ARTIFACTORY_CRED_USR -p $ARTIFACTORY_CRED_PSW $ARTIFACTORY_REPO
-                   docker push "$ARTIFACTORY_REPO/acme/${JOB_NAME}_${BRANCH_NAME}:latest"
+                   docker push "${IMAGE_NAME}:latest"
                 """
             }
         }
