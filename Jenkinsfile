@@ -21,7 +21,9 @@ pipeline {
         stage('Push image') {
             steps {
                 echo 'Docker login....'
-                docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS $ARTIFACTORY_REPO
+                sh """
+                   docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS $ARTIFACTORY_REPO
+                """
             }
         }
         stage('Deploy') {
