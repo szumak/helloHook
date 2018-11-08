@@ -1,4 +1,10 @@
 pipeline {
+
+    environment {
+        ARTIFACTORY_REPO = ARTIFACTORY_HOST
+        ARTIFACTORY_USER = credentials('ARTIFACTORY_USER')
+        ARTIFACTORY_PASS = credentials('ARTIFACTORY_PASS')
+    }
    
     agent { node { label 'slave' } }
 
@@ -12,9 +18,10 @@ pipeline {
                 """
             }
         }
-        stage('Test') {
+        stage('Push image') {
             steps {
-                echo 'Testing....'
+                echo 'Docker login....'
+                docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS $ARTIFACTORY_REPO
             }
         }
         stage('Deploy') {
