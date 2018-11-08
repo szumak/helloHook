@@ -13,7 +13,7 @@ pipeline {
                 echo 'Building...'
                 sh """
                    cd image
-                   docker build --pull -t "mszumski:latest" .
+                   docker build --pull -t "$ARTIFACTORY_REPO/acme/${JOB_NAME}_${BRANCH_NAME}:latest" .
                 """
             }
         }
@@ -22,6 +22,7 @@ pipeline {
                 echo 'Docker login....'
                 sh """
                    docker login -u $ARTIFACTORY_CRED_USR -p $ARTIFACTORY_CRED_PSW $ARTIFACTORY_REPO
+                   docker push "$ARTIFACTORY_REPO/acme/${JOB_NAME}_${BRANCH_NAME}:latest"
                 """
             }
         }
