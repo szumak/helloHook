@@ -3,7 +3,7 @@ pipeline {
     environment {
         ARTIFACTORY_REPO = credentials('ARTIFACTORY_HOST')
         ARTIFACTORY_CRED = credentials('ARTIFACTORY_DOCKER')
-        IMAGE_NAME       = "ARTIFACTORY_REPO/acme/" + "JOB_NAME".replaceAll('/', '_').toLowerCase()
+        IMAGE_NAME       = "ARTIFACTORY_REPO/acme/" + "${JOB_NAME}".replaceAll('/', '_').toLowerCase()
     }
    
     agent { node { label 'slave' } }
